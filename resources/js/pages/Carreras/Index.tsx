@@ -18,7 +18,6 @@ export default function Index({
                 {carreras.map((carrera)=>(
                     <li key={carrera.id}>
                         {carrera.nombre}
-                        {' '}
                         <Link href={`/carreras/${carrera.id}/edit`}>
                                 Editar
                         </Link>
