@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Materia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class MateriaController extends Controller
 {
@@ -12,7 +13,9 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Materias/Index',[
+            'materias'=>Materia::all()
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        //
+        return  Inertia::render('Materias/Create');
     }
 
     /**
@@ -28,7 +31,16 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|string|max:100|unique:materias,nombre',
+            'creditos'=>'required|integer|min:1|max:5'
+        ]);
+        Materia::create([
+            'nombre'=>$request->nombre,
+            'creditos'=>$request->creditos,
+            'activo' =>true
+        ]);
+        return redirect()->route('materias.index');
     }
 
     /**
@@ -44,7 +56,9 @@ class MateriaController extends Controller
      */
     public function edit(Materia $materia)
     {
-        //
+        return Inertia::render('Materias/Edit',[
+            'materia'=>$materia
+        ]);
     }
 
     /**
@@ -52,7 +66,15 @@ class MateriaController extends Controller
      */
     public function update(Request $request, Materia $materia)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|string|max:100|unique:materias,nombre,'.$materia->id,
+            'creditos'=>'required|integer|min:1|max:5'
+        ]);
+        $materia->update([
+            'nombre'=>$request->nombre,
+            'creditos'=>$request->creditos,
+        ]);
+        return redirect()->route('materias.index');
     }
 
     /**
@@ -60,6 +82,7 @@ class MateriaController extends Controller
      */
     public function destroy(Materia $materia)
     {
-        //
+        $materia->delete();
+        return redirect()->route('materias.index');
     }
 }
