@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Maestro;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class MaestroController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Maestros/Index',[
+            'maestros' => Maestro::all()
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class MaestroController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Maestros/Create');
     }
 
     /**
@@ -28,7 +31,16 @@ class MaestroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|string|max:100',
+            'especialidad'=>'required|string|max:100'
+        ]);
+        Maestro::create([
+            'nombre'=>$request->nombre,
+            'especialidad'=>$request->especialidad,
+            'activo'=>true
+        ]);
+        return redirect()->route('maestros.index');
     }
 
     /**
@@ -44,7 +56,9 @@ class MaestroController extends Controller
      */
     public function edit(Maestro $maestro)
     {
-        //
+        return Inertia::render('Maestros/Edit', [
+            'maestro'=>$maestro
+        ]);
     }
 
     /**
@@ -52,7 +66,15 @@ class MaestroController extends Controller
      */
     public function update(Request $request, Maestro $maestro)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|string|max:100',
+            'especialidad'=>'required|string|max:100'
+        ]);
+        $maestro->update([
+            'nombre'=>$request->nombre,
+            'especialidad'=>$request->especialidad,
+        ]);
+        return redirect()->route('maestros.index');
     }
 
     /**
@@ -60,6 +82,7 @@ class MaestroController extends Controller
      */
     public function destroy(Maestro $maestro)
     {
-        //
+        $maestro->delete();
+        return redirect()->route('maestros.index');
     }
 }
