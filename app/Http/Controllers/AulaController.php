@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Aula;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class AulaController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Aulas/Index', [
+            'aulas' => Aula::all()
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class AulaController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Aulas/Create');
     }
 
     /**
@@ -28,7 +31,16 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:10',
+        ]);
+
+        Aula::create([
+            'nombre' => $request->nombre,
+            'activo' =>true
+        ]);
+
+        return redirect()->route('aulas.index');
     }
 
     /**
@@ -44,7 +56,9 @@ class AulaController extends Controller
      */
     public function edit(Aula $aula)
     {
-        //
+        return Inertia::render('Aulas/Edit', [
+            'aula' => $aula
+        ]);
     }
 
     /**
@@ -52,7 +66,15 @@ class AulaController extends Controller
      */
     public function update(Request $request, Aula $aula)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:10',
+        ]);
+
+        $aula->update([
+            'nombre' => $request->nombre,
+        ]);
+
+        return redirect()->route('aulas.index');
     }
 
     /**
@@ -60,6 +82,7 @@ class AulaController extends Controller
      */
     public function destroy(Aula $aula)
     {
-        //
+        $aula->delete();
+        return redirect()->route('aulas.index');
     }
 }
