@@ -13,6 +13,9 @@ export default function Index({
     return (
         <>
             <h1>Carreras</h1>
+            <Link href="/carreras/create">
+                Nueva Carreras
+            </Link>
 
             <ul>
                 {carreras.map((carrera)=>(
