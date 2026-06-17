@@ -14,7 +14,7 @@ class Estudiante extends Model
         'semestre',
         'activo'
     ];
-    public function carreras()
+    public function carrera()
     {
         return $this->belongsTo(Carrera::class);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Estudiante;
+use App\Models\Carrera;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
@@ -12,7 +14,9 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Estudiantes/Index',[
+            'estudiantes' => Estudiante::with('carrera')->get()
+        ]);
     }
 
     /**
@@ -20,7 +24,9 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Estudiantes/Create',[
+            'carreras' => Carrera::all()
+        ]);
     }
 
     /**
