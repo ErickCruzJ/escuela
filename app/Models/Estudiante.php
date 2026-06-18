@@ -20,6 +20,7 @@ class Estudiante extends Model
     }
     public function clases()
     {
-        return $this->belongsToMany(Clase::class);
+        return $this->belongsToMany(Clase::class)
+        ->withPivot('fecha_inscripcion','calificacion');
     }
 }
