@@ -1,3 +1,4 @@
+import {Link, router} from "@inertiajs/react";
 type Estudiante = {
     id :  number;
     nombre : string;
@@ -14,10 +15,25 @@ export default function Index({
     return(
         <>
             <h1>Estudiantes</h1>
+            <Link href="/estudiantes/create">
+                Nuevo Estudiante
+            </Link>
             <ul>
                 {estudiantes.map((estudiante)=>(
                     <li key={estudiante.id}>
-                        {estudiante.nombre}-{estudiante.carrera.nombre}
+                        {estudiante.id}-{estudiante.nombre}-{estudiante.carrera.nombre}-{estudiante.semestre}
+                        <Link href={`/estudiantes/${estudiante.id}/edit`}>
+                            Editar
+                        </Link>
+                        <button
+                            onClick={()=>{
+                                if (confirm('Estas seguro que quieres eliminar a este estudiante')){
+                                    router.delete(`/estudiantes/${estudiante.id}`);
+                                }
+                            }}
+                        >
+                            Eliminar
+                        </button>
                     </li>
                 ))}
             </ul>

@@ -34,7 +34,18 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request ->validate([
+            'nombre'=>'required|string|max:100',
+            'carrera_id'=>'required|exists:carreras,id',
+            'semestre'=>'required|integer|min:1|max:12',
+        ]);
+        Estudiante::create([
+            'nombre'=>$request->nombre,
+            'carrera_id'=>$request->carrera_id,
+            'semestre'=>$request->semestre,
+            'activo'=>true,
+        ]);
+        return redirect()->route('estudiantes.index');
     }
 
     /**
@@ -50,7 +61,10 @@ class EstudianteController extends Controller
      */
     public function edit(Estudiante $estudiante)
     {
-        //
+        return Inertia::render ('Estudiantes/Edit',[
+            'estudiante' =>$estudiante,
+            'carreras' => Carrera::all(),
+        ]);
     }
 
     /**
@@ -58,7 +72,18 @@ class EstudianteController extends Controller
      */
     public function update(Request $request, Estudiante $estudiante)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|string|max:100',
+            'carrera_id'=>'required|exists:carreras,id',
+            'semestre'=>'required|integer|min:1|max:12',
+        ]);
+        $estudiante->update([
+            'nombre'=>$request->nombre,
+            'carrera_id'=>$request->carrera_id,
+            'semestre'=>$request->semestre,
+            'activo'=>true,
+        ]);
+        return redirect()->route('estudiantes.index');
     }
 
     /**
@@ -66,6 +91,7 @@ class EstudianteController extends Controller
      */
     public function destroy(Estudiante $estudiante)
     {
-        //
+        $estudiante->delete();
+        return redirect()->route('estudiantes.index');
     }
 }
