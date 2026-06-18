@@ -13,15 +13,15 @@ class Clase extends Model
         'grupo',
         'activo'
     ];
-    public function maestros()
+    public function maestro()
     {
         return $this->belongsTo(Maestro::class);
     }
-    public function materias()
+    public function materia()
     {
         return $this->belongsTo(Materia::class);
     }
-    public function aulas()
+    public function aula()
     {
         return $this->belongsTo(Aula::class);
     }
