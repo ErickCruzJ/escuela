@@ -25,6 +25,10 @@ class Clase extends Model
     {
         return $this->belongsTo(Aula::class);
     }
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
     public function estudiantes()
     {
         return $this->belongsToMany(Estudiante::class,'estudiante_clase')

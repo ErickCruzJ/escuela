@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class InscripcionController extends Controller
 {
-    public function Index()
+    public function index()
     {
         return Inertia::render('Inscripciones/Index',[
             'estudiantes' => Estudiante::with([
