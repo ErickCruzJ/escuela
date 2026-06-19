@@ -20,6 +20,7 @@ Route::resource('horarios',HorarioController::class);
 Route::get('/inscripciones/create',[InscripcionController::class,'create']);
 Route::post ('/inscripciones',[InscripcionController::class,'store']);
 Route::get('/inscripciones',[InscripcionController::class, 'index']);
+Route::put('/inscripciones/{estudiante}/{clase}', [InscripcionController::class, 'update']);
 Route::inertia('/', 'welcome')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

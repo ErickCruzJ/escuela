@@ -53,4 +53,21 @@ class InscripcionController extends Controller
         );
         return redirect('/inscripciones/create');
     }
+public function update(Request $request, Estudiante $estudiante, $claseId)
+{
+    $request->validate([
+        'calificacion' => 'nullable|numeric|min:0|max:100'
+    ]);
+
+    // validar que la relación exista
+    if (!$estudiante->clases()->where('clase_id', $claseId)->exists()) {
+        abort(404, 'Esta inscripción no existe');
+    }
+
+    $estudiante->clases()->updateExistingPivot($claseId, [
+        'calificacion' => $request->calificacion
+    ]);
+
+    return back();
+}
 }
