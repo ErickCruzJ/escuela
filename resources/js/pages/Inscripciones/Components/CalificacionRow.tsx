@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { useForm, router } from "@inertiajs/react";
 
 type Clase = {
     id: number;
@@ -26,26 +26,20 @@ export default function CalificacionRow({
     }
 
     return (
-        <li>
-            {clase.materia.nombre} - Grupo {clase.grupo}
-            {" - Fecha: "}
-            {clase.pivot.fecha_inscripcion}
-            {" - Calificación: "}
-            {clase.pivot.calificacion ?? "Sin capturar"}
-
-            <input
+        <div className="flex gap-2 items-center">
+            <input 
                 type="number"
-                min="0"
-                max="100"
+                className="w-20 border rounded px-2 py-1"
                 value={data.calificacion}
-                onChange={(e) =>
-                    setData("calificacion", Number(e.target.value))
-                }
+                onChange={(e)=>setData("calificacion", Number(e.target.value))} 
             />
-
-            <button onClick={submit} disabled={processing}>
+            <button
+                onClick={submit}
+                disabled={processing}
+                className="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
+            >
                 Guardar
             </button>
-        </li>
+        </div>
     );
 }

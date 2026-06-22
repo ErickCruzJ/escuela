@@ -12,7 +12,7 @@ export default function Index({
 }){
     return (
         <>
-            <h1>Carreras</h1>
+            <h1 className=''>Carreras</h1>
             <Link href="/carreras/create">
                 Nueva Carreras
             </Link>
